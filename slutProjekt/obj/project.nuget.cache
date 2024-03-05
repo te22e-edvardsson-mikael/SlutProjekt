@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ose0BME3Et/jk9sj/ZqQUtPy929e+dgPACix0SQ46bpj97X9Ev4HWrCD9u3YgPKc2O7POI/8svSLUDGouKdpxA==",
+  "dgSpecHash": "M3yFoai+fbL8Cf0vYBFm5hrVgfUbBZJXaOwI0I8efsp8fzQIW277p6Esv3lQtlqUR9mlSy1/1L2Opiy3lrdPbg==",
   "success": true,
   "projectFilePath": "C:\\Users\\mikael.edvardsson2\\Documents\\programmering\\SlutProjekt\\slutProjekt\\slutProjekt.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\mikael.edvardsson2\\.nuget\\packages\\raylib-cs\\6.0.0\\raylib-cs.6.0.0.nupkg.sha512",
+    "C:\\Users\\mikael.edvardsson2\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }
