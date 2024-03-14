@@ -24,7 +24,7 @@ int score = 0;
 
 float enemyVelocityY = 1f;
 
-bool spaceKeyReleased = true;
+
 
 
 
@@ -64,6 +64,7 @@ Color[] enemyColors = new Color[] { Color.Blue, Color.Purple, Color.Red, Color.O
 
 while (!Raylib.WindowShouldClose())
 {
+  
 
   if (scene == "start")
   {
@@ -72,7 +73,7 @@ while (!Raylib.WindowShouldClose())
     Raylib.DrawRectangleRec(rRect, Color.Black);
     Raylib.DrawText("Press space to start", 290, 300, 20, Color.Red);
 
-    if (Raylib.IsKeyPressed(KeyboardKey.Space) && spaceKeyReleased)
+    if (Raylib.IsKeyPressed(KeyboardKey.Space))
     {
       Raylib.ClearBackground(Color.Black);
 
@@ -81,13 +82,8 @@ while (!Raylib.WindowShouldClose())
       playerRect.X = 21;
       playerRect.Y = 50;
 
-      spaceKeyReleased = false;
     }
 
-    if (Raylib.IsKeyReleased(KeyboardKey.Space))
-    {
-      spaceKeyReleased = true;
-    }
   }
 
   else if (scene == "game")
@@ -156,6 +152,9 @@ while (!Raylib.WindowShouldClose())
       {
         isInAWall = true;
       }
+       if (Raylib.CheckCollisionRecs(enemyRect, walls[i])){
+      enemyVelocityY = -enemyVelocityY;
+    }
     }
 
     if (isInAWall == true)
@@ -167,7 +166,7 @@ while (!Raylib.WindowShouldClose())
       {
         scene = "start";
         liv = 1;
-        spaceKeyReleased = true;
+       
       }
 
     }
@@ -179,6 +178,8 @@ while (!Raylib.WindowShouldClose())
     //---------------------------------------------------------------------
 
     //funktioner för enemyrect
+
+   
 
     if (Raylib.CheckCollisionRecs(playerRect, enemyRect))
     {
