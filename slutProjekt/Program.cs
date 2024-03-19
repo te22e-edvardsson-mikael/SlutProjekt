@@ -4,12 +4,14 @@ using Raylib_cs;
 using System.Numerics;
 
 
+
 Raylib.InitWindow(1800, 900, "vinterprojekt");
 Raylib.SetTargetFPS(60);
 
 
 //variabler//
 int enemyColorss = 0;
+
 
 string scene;
 string scene2;
@@ -189,8 +191,14 @@ while (!Raylib.WindowShouldClose())
       score++;
 
       Random random = new Random();
+      bool ivaggen = true;
+
+      while (ivaggen){
       enemyRect.X = random.Next(0, 1800);
       enemyRect.Y = random.Next(0, 800);
+
+      ivaggen = walls.Any(wall => Raylib.CheckCollisionRecs(enemyRect, wall));
+      }
     }
 
   }
@@ -205,6 +213,8 @@ while (!Raylib.WindowShouldClose())
       Raylib.DrawText("victory", 900, 450, 10, Color.Violet);
     }
   }
+
+ 
 
   Raylib.EndDrawing();
 }
