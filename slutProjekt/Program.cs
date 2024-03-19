@@ -20,11 +20,13 @@ scene = "start";
 
 scene2 = "victory";
 
-int liv = 1;
+int liv = 2;
 
 int score = 0;
 
 float enemyVelocityY = 1f;
+
+
 
 
 
@@ -35,21 +37,7 @@ float enemyVelocityY = 1f;
 List<Rectangle> walls = new();
 
 
-walls.Add(new Rectangle(300, 100, 60, 20));
-walls.Add(new Rectangle(320, 0, 16, 200));
-walls.Add(new Rectangle(300, 0, 32, 128));
-walls.Add(new Rectangle(300, 600, 100, 128));
-walls.Add(new Rectangle(1000, 0, 50, 128));
-walls.Add(new Rectangle(1000, 600, 50, 128));
-walls.Add(new Rectangle(800, 100, 50, 128));
-walls.Add(new Rectangle(1600, 70, 50, 128));
-walls.Add(new Rectangle(1400, 300, 50, 128));
 
-
-walls.Add(new Rectangle(0, 0, 1800, 20));
-walls.Add(new Rectangle(0, 880, 1800, 20));
-walls.Add(new Rectangle(1780, 0, 20, 900));
-walls.Add(new Rectangle(0, 0, 20, 900));
 
 
 
@@ -66,7 +54,7 @@ Color[] enemyColors = new Color[] { Color.Blue, Color.Purple, Color.Red, Color.O
 
 while (!Raylib.WindowShouldClose())
 {
-  
+
 
   if (scene == "start")
   {
@@ -81,6 +69,26 @@ while (!Raylib.WindowShouldClose())
 
       scene = "game";
 
+      walls.Clear();
+
+
+
+      walls.Add(new Rectangle(300, 100, 60, 20));
+      walls.Add(new Rectangle(320, 0, 16, 200));
+      walls.Add(new Rectangle(300, 0, 32, 128));
+      walls.Add(new Rectangle(300, 600, 100, 128));
+      walls.Add(new Rectangle(1000, 0, 50, 128));
+      walls.Add(new Rectangle(1000, 600, 50, 128));
+      walls.Add(new Rectangle(800, 100, 50, 128));
+      walls.Add(new Rectangle(1600, 70, 50, 128));
+      walls.Add(new Rectangle(1400, 300, 50, 128));
+
+
+      walls.Add(new Rectangle(0, 0, 1800, 20));
+      walls.Add(new Rectangle(0, 880, 1800, 20));
+      walls.Add(new Rectangle(1780, 0, 20, 900));
+      walls.Add(new Rectangle(0, 0, 20, 900));
+
       playerRect.X = 21;
       playerRect.Y = 50;
 
@@ -89,10 +97,10 @@ while (!Raylib.WindowShouldClose())
   }
 
   else if (scene == "game")
-  
+
     Raylib.BeginDrawing();
-    Raylib.ClearBackground(Color.White);
-{
+  Raylib.ClearBackground(Color.White);
+  {
     //render
     Raylib.DrawText($"points {score}", 50, 520, 40, Color.Gray);
     Raylib.DrawText($"Health {liv}", 250, 520, 40, Color.Gray);
@@ -154,9 +162,10 @@ while (!Raylib.WindowShouldClose())
       {
         isInAWall = true;
       }
-       if (Raylib.CheckCollisionRecs(enemyRect, walls[i])){
-      enemyVelocityY = -enemyVelocityY;
-    }
+      if (Raylib.CheckCollisionRecs(enemyRect, walls[i]))
+      {
+        enemyVelocityY = -enemyVelocityY;
+      }
     }
 
     if (isInAWall == true)
@@ -164,11 +173,18 @@ while (!Raylib.WindowShouldClose())
 
       liv--;
 
+      playerRect.X = 21;
+      playerRect.Y = 50;
+
+
       if (liv < 0)
       {
+
+        walls.Clear();
+
         scene = "start";
         liv = 1;
-       
+
       }
 
     }
@@ -181,7 +197,7 @@ while (!Raylib.WindowShouldClose())
 
     //funktioner för enemyrect
 
-   
+
 
     if (Raylib.CheckCollisionRecs(playerRect, enemyRect))
     {
@@ -191,30 +207,34 @@ while (!Raylib.WindowShouldClose())
       score++;
 
       Random random = new Random();
-      bool ivaggen = true;
 
-      while (ivaggen){
-      enemyRect.X = random.Next(0, 1800);
-      enemyRect.Y = random.Next(0, 800);
+      bool iväggen = true;
 
-      ivaggen = walls.Any(wall => Raylib.CheckCollisionRecs(enemyRect, wall));
+      while (iväggen)
+      {
+        enemyRect.X = random.Next(0, 1800);
+        enemyRect.Y = random.Next(0, 800);
+
+        iväggen = walls.Any(wall => Raylib.CheckCollisionRecs(enemyRect, wall));
       }
     }
 
   }
-  if (score == 15)
+  if (score == 5)
   {
     scene2 = "victory";
 
 
     if (scene2 == "victory")
     {
+
+      walls.Clear();
       Raylib.ClearBackground(Color.Black);
       Raylib.DrawText("victory", 900, 450, 10, Color.Violet);
     }
   }
 
- 
+
 
   Raylib.EndDrawing();
 }
