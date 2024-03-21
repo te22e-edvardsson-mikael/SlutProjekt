@@ -36,6 +36,30 @@ float enemyVelocityY = 1f;
 
 List<Rectangle> walls = new();
 
+void newlevel(List<Rectangle>wallslist){
+
+      walls.Clear;
+      
+      walls.Add(new Rectangle(300, 100, 60, 20));
+      walls.Add(new Rectangle(320, 0, 16, 200));
+      walls.Add(new Rectangle(300, 0, 32, 128));
+      walls.Add(new Rectangle(300, 600, 100, 128));
+      walls.Add(new Rectangle(1000, 0, 50, 128));
+      walls.Add(new Rectangle(1000, 600, 50, 128));
+      walls.Add(new Rectangle(800, 100, 50, 128));
+      walls.Add(new Rectangle(1600, 70, 50, 128));
+      walls.Add(new Rectangle(1400, 300, 50, 128));
+
+
+      walls.Add(new Rectangle(0, 0, 1800, 20));
+      walls.Add(new Rectangle(0, 880, 1800, 20));
+      walls.Add(new Rectangle(1780, 0, 20, 900));
+      walls.Add(new Rectangle(0, 0, 20, 900));
+
+}
+
+nylevel(wallslist);
+
 
 
 
@@ -73,21 +97,7 @@ while (!Raylib.WindowShouldClose())
 
 
 
-      walls.Add(new Rectangle(300, 100, 60, 20));
-      walls.Add(new Rectangle(320, 0, 16, 200));
-      walls.Add(new Rectangle(300, 0, 32, 128));
-      walls.Add(new Rectangle(300, 600, 100, 128));
-      walls.Add(new Rectangle(1000, 0, 50, 128));
-      walls.Add(new Rectangle(1000, 600, 50, 128));
-      walls.Add(new Rectangle(800, 100, 50, 128));
-      walls.Add(new Rectangle(1600, 70, 50, 128));
-      walls.Add(new Rectangle(1400, 300, 50, 128));
-
-
-      walls.Add(new Rectangle(0, 0, 1800, 20));
-      walls.Add(new Rectangle(0, 880, 1800, 20));
-      walls.Add(new Rectangle(1780, 0, 20, 900));
-      walls.Add(new Rectangle(0, 0, 20, 900));
+     
 
       playerRect.X = 21;
       playerRect.Y = 50;
@@ -183,7 +193,7 @@ while (!Raylib.WindowShouldClose())
         walls.Clear();
 
         scene = "start";
-        liv = 1;
+        liv = 2;
 
       }
 
@@ -231,7 +241,13 @@ while (!Raylib.WindowShouldClose())
       walls.Clear();
       Raylib.ClearBackground(Color.Black);
       Raylib.DrawText("victory", 900, 450, 10, Color.Violet);
+      if (Raylib.IsKeyPressed(KeyboardKey.Space)){
+
+        scene3 == "game2";
+      }
     }
+
+  
   }
 
 
