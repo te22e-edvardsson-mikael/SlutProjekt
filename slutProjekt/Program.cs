@@ -15,10 +15,13 @@ int enemyColorss = 0;
 
 string scene;
 string scene2;
+string scene3;
 
 scene = "start";
 
 scene2 = "victory";
+
+scene3 = "game2";
 
 int liv = 2;
 
@@ -35,11 +38,20 @@ float enemyVelocityY = 1f;
 //listor//
 
 List<Rectangle> walls = new();
+List<Rectangle> walls2 = new();
+
+void newlevel2(List<Rectangle>walls2list){
+
+      walls2.Add(new Rectangle(0, 0, 1800, 20));
+      walls2.Add(new Rectangle(0, 880, 1800, 20));
+      walls2.Add(new Rectangle(1780, 0, 20, 900));
+      walls2.Add(new Rectangle(0, 0, 20, 900));
+}
 
 void newlevel(List<Rectangle>wallslist){
 
-      walls.Clear;
-      
+     
+
       walls.Add(new Rectangle(300, 100, 60, 20));
       walls.Add(new Rectangle(320, 0, 16, 200));
       walls.Add(new Rectangle(300, 0, 32, 128));
@@ -58,7 +70,7 @@ void newlevel(List<Rectangle>wallslist){
 
 }
 
-nylevel(wallslist);
+
 
 
 
@@ -90,10 +102,15 @@ while (!Raylib.WindowShouldClose())
     if (Raylib.IsKeyPressed(KeyboardKey.Space))
     {
       Raylib.ClearBackground(Color.Black);
+      walls.Clear();
 
       scene = "game";
 
-      walls.Clear();
+      
+
+      
+    
+
 
 
 
@@ -112,6 +129,7 @@ while (!Raylib.WindowShouldClose())
   Raylib.ClearBackground(Color.White);
   {
     //render
+    newlevel(walls);
     Raylib.DrawText($"points {score}", 50, 520, 40, Color.Gray);
     Raylib.DrawText($"Health {liv}", 250, 520, 40, Color.Gray);
     Raylib.DrawRectangleRec(playerRect, Color.Red);
@@ -243,11 +261,18 @@ while (!Raylib.WindowShouldClose())
       Raylib.DrawText("victory", 900, 450, 10, Color.Violet);
       if (Raylib.IsKeyPressed(KeyboardKey.Space)){
 
-        scene3 == "game2";
+        scene3 = "game2";
       }
     }
 
-  
+  if (scene3 == "game2"){
+   
+   walls.Clear();
+   newlevel2(walls2);
+  }
+
+
+
   }
 
 
