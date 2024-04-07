@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using Raylib_cs;
 using System.Numerics;
+using System.Linq;
 
 
 
@@ -13,15 +14,12 @@ Raylib.SetTargetFPS(60);
 int enemyColorss = 0;
 
 
-string scene;
-string scene2;
-string scene3;
+string scene = "start";
 
-scene = "start";
 
-scene2 = "victory";
 
-scene3 = "game2";
+
+
 
 int liv = 2;
 
@@ -124,16 +122,18 @@ while (!Raylib.WindowShouldClose())
   }
 
   else if (scene == "game")
-
-    Raylib.BeginDrawing();
-  Raylib.ClearBackground(Color.White);
   {
     //render
+    Raylib.BeginDrawing();
+    Raylib.ClearBackground(Color.White);
+    {
     newlevel(walls);
     Raylib.DrawText($"points {score}", 50, 520, 40, Color.Gray);
     Raylib.DrawText($"Health {liv}", 250, 520, 40, Color.Gray);
     Raylib.DrawRectangleRec(playerRect, Color.Red);
     Raylib.DrawRectangleRec(enemyRect, enemyColors[enemyColorss]);
+
+   
 
 
     //-------------------------------------------------------------------------------
@@ -246,36 +246,37 @@ while (!Raylib.WindowShouldClose())
         iväggen = walls.Any(wall => Raylib.CheckCollisionRecs(enemyRect, wall));
       }
     }
-
   }
-  if (score == 5)
-  {
-    scene2 = "victory";
 
+  Raylib.EndDrawing();
+  }
+  
+ 
 
-    if (scene2 == "victory")
+    else if (scene == "victory")
     {
 
-      walls.Clear();
+      Raylib.BeginDrawing();
       Raylib.ClearBackground(Color.Black);
       Raylib.DrawText("victory", 900, 450, 10, Color.Violet);
-      if (Raylib.IsKeyPressed(KeyboardKey.Space)){
+      if (Raylib.IsKeyPressed(KeyboardKey.Space))
+      {
 
-        scene3 = "game2";
+        scene = "game2";
+        walls2.Clear();
       }
+      Raylib.EndDrawing();
     }
 
-  if (scene3 == "game2"){
+
+  else if (scene == "game2"){
    
-   walls.Clear();
    newlevel2(walls2);
   }
 
-
-
+ if (score >= 5)
+  {
+    scene = "victory";
+    walls.Clear();
   }
-
-
-
-  Raylib.EndDrawing();
-}
+ }
