@@ -101,12 +101,12 @@ bool enemyIsInWall = false;
       playerIsInAWall = true;
     }
 
-     if (Raylib.CheckCollisionRecs(character, wallList[i]))
+     if (Raylib.CheckCollisionRecs(enemy, wallList[i]))
     {
-      bounce = true;
+      enemyIsInWall = true;
     }
   }
-  return (isInAWall, bounce);
+  return (playerIsInAWall, enemyIsInWall);
  }
 
   /*  if (Raylib.CheckCollisionRecs(character, wallList[i]))
@@ -216,15 +216,9 @@ while (!Raylib.WindowShouldClose())
 
 
 
-  (bool isInAWall, bool bounce) = CheckInWall(playerRect, walls.Concat(walls2).ToList());
- // if (CheckInWall(enemyRect, walls)) 
+  (bool playerIsInAWall, bool enemyIsInWall) = CheckInWall(playerRect, enemyRect, walls.Concat(walls2).ToList());
 
-if(bounce) {
-  enemyVelocityY = -enemyVelocityY;
-}
-
-
-  if (isInAWall)
+  if (playerIsInAWall)
   {
 
     liv--;
@@ -245,6 +239,9 @@ if(bounce) {
 
   }
 
+if(enemyIsInWall) {
+  enemyVelocityY = -enemyVelocityY;
+}
 
 
 
