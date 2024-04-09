@@ -40,6 +40,13 @@ List<Rectangle> walls2 = new();
 void newlevel2(List<Rectangle> walls2list)
 {
 
+ walls2.Add(new Rectangle(300, 150, 60, 20));
+ walls2.Add(new Rectangle(300, 150, 600, 20));
+ walls2.Add(new Rectangle(0, 880, 1600, 20));
+
+
+
+
   walls2.Add(new Rectangle(0, 0, 1800, 20));
   walls2.Add(new Rectangle(0, 880, 1800, 20));
   walls2.Add(new Rectangle(1780, 0, 20, 900));
@@ -82,6 +89,9 @@ newlevel2(walls2);
 Rectangle rRect = new Rectangle(275, 260, 250, 100);
 Rectangle playerRect = new Rectangle(1, 50, 100, 100);
 Rectangle enemyRect = new Rectangle(1000, 100, 100, 100);
+Rectangle PowerUpRect = new Rectangle(500, 400, 20, 20);
+
+bool PowerUp = true;
 
 
 
@@ -209,6 +219,11 @@ while (!Raylib.WindowShouldClose())
     playerRect.Y += 5;
   }
 
+  if (PowerUp && Raylib.CheckCollisionRecs(playerRect, PowerUpRect)){
+    liv++;
+    PowerUp = false;
+  }
+
 
   //-------------------------------------------------------------------------
 
@@ -307,7 +322,10 @@ if(enemyIsInWall) {
     Raylib.DrawText($"Health {liv}", 250, 520, 40, Color.Gray);
     Raylib.DrawRectangleRec(playerRect, Color.Red);
     Raylib.DrawRectangleRec(enemyRect, enemyColors[enemyColorss]);
-
+  
+  if (PowerUp == true){
+    Raylib.DrawRectangleRec(PowerUpRect, Color.Gray);
+  }
 
 
   }
@@ -317,6 +335,8 @@ if(enemyIsInWall) {
     scene = "victory";
     walls.Clear();
   }
+
+
   Raylib.EndDrawing();
 }
 
