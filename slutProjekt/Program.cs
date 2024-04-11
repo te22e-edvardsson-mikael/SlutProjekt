@@ -323,7 +323,7 @@ if(enemyIsInWall) {
     Raylib.DrawRectangleRec(playerRect, Color.Red);
     Raylib.DrawRectangleRec(enemyRect, enemyColors[enemyColorss]);
   
-  if (PowerUp == true){
+  if (PowerUp){
     Raylib.DrawRectangleRec(PowerUpRect, Color.Gray);
   }
 
