@@ -17,7 +17,8 @@ string scene = "start";
 
 
 
-
+float timer = 0f;
+bool tidslut = false; 
 
 
 int liv = 2;
@@ -320,6 +321,7 @@ if(enemyIsInWall) {
 
     Raylib.DrawText($"points {score}", 50, 520, 40, Color.Gray);
     Raylib.DrawText($"Health {liv}", 250, 520, 40, Color.Gray);
+    Raylib.DrawText($"Time {timer}", 450, 520, 40, Color.Green);
     Raylib.DrawRectangleRec(playerRect, Color.Red);
     Raylib.DrawRectangleRec(enemyRect, enemyColors[enemyColorss]);
   
@@ -327,10 +329,16 @@ if(enemyIsInWall) {
     Raylib.DrawRectangleRec(PowerUpRect, Color.Gray);
   }
 
+  timer += Raylib.GetFrameTime();
+
+  if (timer >= 30f && !tidslut){
+  tidslut = true; 
+  }
+
 
   }
 
-  if (score == 5)
+  if (score == 2)
   {
     scene = "victory";
     walls.Clear();
