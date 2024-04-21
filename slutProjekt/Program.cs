@@ -21,6 +21,7 @@ float timer = 0f;
 bool tidslut = false; 
 
 
+
 int liv = 2;
 
 int score = 0;
@@ -79,6 +80,8 @@ void newlevel(List<Rectangle> wallslist)
 
 newlevel(walls);
 newlevel2(walls2);
+
+List<Rectangle> lasershot = new List<Rectangle>();
 
 
 
@@ -285,6 +288,8 @@ if(enemyIsInWall) {
       enemyRect.Y = random.Next(0, 800);
 
       iveggen = walls.Any(wall => Raylib.CheckCollisionRecs(enemyRect, wall));
+      iveggen = walls2.Any(wall2 => Raylib.CheckCollisionRecs(enemyRect, wall2));
+
     }
   }
 
@@ -331,9 +336,30 @@ if(enemyIsInWall) {
 
   timer += Raylib.GetFrameTime();
 
-  if (timer >= 30f && !tidslut){
+  if (timer >= 15f && !tidslut){
   tidslut = true; 
+  scene = "start";
   }
+
+  if (Raylib.IsKeyPressed(KeyboardKey.S))
+  {
+    lasershot.Add(new Rectangle(playerRect.X + playerRect.Width / 2 - 2, playerRect.Y, 4, 10));
+  }
+
+  for (int i = 0; i < lasershot.Count; i++){
+    lasershot[i].Y -= 10;
+    if (lasershot[i].Y < 0){
+      lasershot.RemoveAt(i);
+    }
+
+  }
+
+  foreach (Rectangle laser in lasershot)
+  {
+Raylib.DrawRectangleRec(laser, Color.Violet);
+  }
+
+  for (int i = 0; i < lasershot)
 
 
   }
