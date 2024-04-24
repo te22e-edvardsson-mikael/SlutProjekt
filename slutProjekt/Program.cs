@@ -80,6 +80,11 @@ void newlevel(List<Rectangle> wallslist)
   walls.Add(new Rectangle(0, 880, 1800, 20));
   walls.Add(new Rectangle(1780, 0, 20, 900));
   walls.Add(new Rectangle(0, 0, 20, 900));
+  walls.Add(new Rectangle(800, 500, 300, 20));
+  walls.Add(new Rectangle(100, 700, 200, 20));
+  walls.Add(new Rectangle(1400, 200, 20, 300));
+  walls.Add(new Rectangle(500, 100, 20, 200));
+  
 
 }
 
@@ -136,6 +141,7 @@ while (!validspawnpoint)
 
 //kontrollerar kollision med alla väggar
  bool IsenemyInWall = walls.Concat(walls2).Any(wall => Raylib.CheckCollisionRecs(enemyRect, wall));
+
  // om fienden är inte i vägg är avslutas loopen och enemyn kan spawna
  if (!IsenemyInWall)
 {
