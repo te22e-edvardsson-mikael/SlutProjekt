@@ -54,6 +54,15 @@ void newlevel2(List<Rectangle> walls2list)
   walls2.Add(new Rectangle(1780, 0, 20, 900));
   walls2.Add(new Rectangle(0, 0, 20, 900));
   walls2.Add(new Rectangle(0, 400, 200, 20));
+  walls2.Add(new Rectangle(400, 300, 100, 20));
+  walls2.Add(new Rectangle(800, 600, 20, 300));
+  walls2.Add(new Rectangle(100, 100, 20, 200));
+  walls2.Add(new Rectangle(1200, 400, 200, 20));
+  walls2.Add(new Rectangle(1400, 200, 20, 400));
+  walls2.Add(new Rectangle(600, 200, 400, 20));
+  walls2.Add(new Rectangle(700, 600, 100, 20));
+  
+
 }
 
 void newlevel(List<Rectangle> wallslist)
@@ -116,11 +125,18 @@ bool IsenemyInWall = false;
 //while-loop för att kolla så att enemyn inte respawnar innuti väggen
 while (!validspawnpoint)
 {
-  enemyRect.X = random.Next(0, 1800);
-  enemyRect.Y = random.Next(0, 800);
+  int spawnX = random.Next(0, 1800);
+  int spawnY = random.Next(0, 800);
 
- 
- (bool playerIsInWall,bool IsenemyInWall) = CheckInWall(playerRect, enemyRect, walls.Concat(walls2).ToList());
+  enemyRect.X = spawnX;
+  enemyRect.Y = spawnY;
+
+  
+
+
+//kontrollerar kollision med alla väggar
+ bool IsenemyInWall = walls.Concat(walls2).Any(wall => Raylib.CheckCollisionRecs(enemyRect, wall));
+ // om fienden är inte i vägg är avslutas loopen och enemyn kan spawna
  if (!IsenemyInWall)
 {
   validspawnpoint = true;
@@ -141,14 +157,17 @@ while (!Raylib.WindowShouldClose())
 //start scene
   if (scene == "start")
   {
+    walls2.Clear();
+    newlevel(walls);
     Raylib.BeginDrawing();
+
 
     Raylib.ClearBackground(Color.Black);
     Raylib.DrawRectangleRec(rRect, Color.Black);
     Raylib.DrawText("Press space to start", 290, 300, 20, Color.Red);
     Raylib.DrawText("Press space after you're done with the first lvl to advance to lvl2", 290, 400, 20, Color.Red);
     Raylib.DrawText("LVL2: Look out for gray rectangles for boosts in lvl2 and you will have a laser activated, you will have 30sec to complete lvl2", 290, 500, 20, Color.Red);
-
+    
 
 //starta spelet
     if (Raylib.IsKeyPressed(KeyboardKey.Space))
@@ -165,11 +184,18 @@ while (!Raylib.WindowShouldClose())
       validspawnpoint = false;
 
     }
+    
   }
 //spel 1 scene
   else if (scene == "game")
   {
+
+    
+
     Raylib.ClearBackground(Color.White);
+
+    
+
     foreach (Rectangle wall in walls)
     {
       Raylib.DrawRectangleRec(wall, Color.DarkBlue);
@@ -278,7 +304,7 @@ if(enemyIsInWall) {
 
 
   
-//spawnar nya fienden och 
+//spawnar nya fienden och ser till så att den inte spawnar i väggen
     while (iveggen)
     {
       enemyRect.X = random.Next(0, 1800);
@@ -312,10 +338,14 @@ if(enemyIsInWall) {
 
   if (scene == "game2")
   {
-
+    walls2.Clear(); 
+    newlevel2(walls2); 
 
     Raylib.ClearBackground(Color.White);
+    
 
+
+//rita ut väggarna i game2
     foreach (Rectangle wall2 in walls2)
     {
       Raylib.DrawRectangleRec(wall2, Color.Brown);
@@ -328,7 +358,7 @@ if(enemyIsInWall) {
     Raylib.DrawRectangleRec(playerRect, Color.Red);
     Raylib.DrawRectangleRec(enemyRect, enemyColors[enemyColorss]);
 
-  
+  // om powerup är true 
   if (PowerUp){
     Raylib.DrawRectangleRec(PowerUpRect, Color.Gray);
   }
