@@ -108,11 +108,6 @@ bool IsenemyInWall = false;
 
   for (int i = 0; i < wallList.Count; i++)
   {
-//är spelaren i väggen
-    if (Raylib.CheckCollisionRecs(player, wallList[i]))
-    {
-      playerIsInAWall = true;
-    }
 //är enemy i väggen
      if (Raylib.CheckCollisionRecs(enemy, wallList[i]))
     {
@@ -408,7 +403,7 @@ if(enemyIsInWall) {
   }
   }
 
-  if (score == 2)
+  if (score == 5)
   {
     scene = "victory";
     walls.Clear();
