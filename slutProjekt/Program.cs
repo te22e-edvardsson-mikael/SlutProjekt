@@ -42,7 +42,6 @@ Color[] enemyColors = new Color[] { Color.Blue, Color.Purple, Color.Red, Color.O
 
 List<Rectangle> walls = new();
 List<Rectangle> walls2 = new();
-List<Rectangle> walls2game = new();
 
 void newlevel2(List<Rectangle> walls2list)
 {
@@ -55,9 +54,6 @@ void newlevel2(List<Rectangle> walls2list)
   walls2.Add(new Rectangle(1780, 0, 20, 900));
   walls2.Add(new Rectangle(0, 0, 20, 900));
   walls2.Add(new Rectangle(0, 400, 200, 20));
-  walls2.Add(new Rectangle(0, 400, 200, 20));
-  walls2.Add(new Rectangle(600, 300, 20, 200));
-  walls2.Add(new Rectangle(1000, 500, 200, 20));
 }
 
 void newlevel(List<Rectangle> wallslist)
@@ -90,28 +86,27 @@ Random random = new Random();
 
 
 //metod för kollisioner mellan spelare/fiende och väggar
-
-static bool Checkplayerinwallgame1(Rectangle player, List<Rectangle> wallist)
+static (bool, bool) CheckInWall(Rectangle player, Rectangle enemy, List<Rectangle> wallList)
 {
+bool playerIsInAWall = false;
+bool IsenemyInWall = false;
+  
+
   for (int i = 0; i < wallList.Count; i++)
   {
-    if (Raylib.CheckCollisionRecs(player, walllist[i]))
+//är spelaren i väggen
+    if (Raylib.CheckCollisionRecs(player, wallList[i]))
     {
-      return true;
+      playerIsInAWall = true;
+    }
+//är enemy i väggen
+     if (Raylib.CheckCollisionRecs(enemy, wallList[i]))
+    {
+      IsenemyInWall = true;
     }
   }
-}
-
-static bool Checkplayerinwallgame2(Rectangle player, List<Rectangle> wallist)
-{
-  for (int i = 0; i < wallList.Count; i++)
-  {
-    if (Raylib.CheckCollisionRecs(player, walllist[i]))
-    {
-      return true;
-    }
-  }
-}
+  return (playerIsInAWall, IsenemyInWall);
+ }
 
 
 
@@ -243,7 +238,6 @@ while (!Raylib.WindowShouldClose())
  //kollision mellan väggar och tar bort liv ifall det blir kollision
   (bool playerIsInAWall, bool enemyIsInWall) = CheckInWall(playerRect, enemyRect, walls.Concat(walls2).ToList());
 
-
   if (playerIsInAWall)
   {
 
@@ -318,8 +312,6 @@ if(enemyIsInWall) {
 
   if (scene == "game2")
   {
-
-    walls.Clear();
 
 
     Raylib.ClearBackground(Color.White);
