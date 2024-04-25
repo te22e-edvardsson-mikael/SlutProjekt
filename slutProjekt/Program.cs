@@ -61,7 +61,7 @@ void newlevel2(List<Rectangle> walls2list)
   walls2.Add(new Rectangle(1400, 200, 20, 400));
   walls2.Add(new Rectangle(600, 200, 400, 20));
   walls2.Add(new Rectangle(700, 600, 100, 20));
-  
+
 
 }
 
@@ -84,7 +84,7 @@ void newlevel(List<Rectangle> wallslist)
   walls.Add(new Rectangle(100, 700, 200, 20));
   walls.Add(new Rectangle(1400, 200, 20, 300));
   walls.Add(new Rectangle(500, 100, 20, 200));
-  
+
 
 }
 
@@ -102,46 +102,51 @@ Random random = new Random();
 //metod för kollisioner mellan spelare/fiende och väggar
 static (bool, bool) CheckInWall(Rectangle player, Rectangle enemy, List<Rectangle> wallList)
 {
-bool playerIsInAWall = false;
-bool IsenemyInWall = false;
-  
+  bool playerIsInAWall = false;
+  bool IsenemyInWall = false;
+
 
   for (int i = 0; i < wallList.Count; i++)
   {
-//är enemy i väggen
-     if (Raylib.CheckCollisionRecs(enemy, wallList[i]))
+    //är enemy i väggen
+    if (Raylib.CheckCollisionRecs(enemy, wallList[i]))
     {
       IsenemyInWall = true;
     }
+
+    if (Raylib.CheckCollisionRecs(player, wallList[i]))
+    {
+      playerIsInAWall = true;
+    }
   }
   return (playerIsInAWall, IsenemyInWall);
- }
+}
 
 
 
- 
 
- 
+
+
 //while-loop för att kolla så att enemyn inte respawnar innuti väggen
 while (!validspawnpoint)
 {
-  int spawnX = random.Next(0, 1800);
-  int spawnY = random.Next(0, 800);
+  int spawnX = random.Next(50, 1750);
+  int spawnY = random.Next(50, 750);
 
   enemyRect.X = spawnX;
   enemyRect.Y = spawnY;
 
-  
 
 
-//kontrollerar kollision med alla väggar
- bool IsenemyInWall = walls.Concat(walls2).Any(wall => Raylib.CheckCollisionRecs(enemyRect, wall));
 
- // om fienden är inte i vägg är avslutas loopen och enemyn kan spawna
- if (!IsenemyInWall)
-{
-  validspawnpoint = true;
-}
+  //kontrollerar kollision med alla väggar
+  bool IsenemyInWall = walls.Concat(walls2).Any(wall => Raylib.CheckCollisionRecs(enemyRect, wall));
+
+  // om fienden är inte i vägg är avslutas loopen och enemyn kan spawna
+  if (!IsenemyInWall)
+  {
+    validspawnpoint = true;
+  }
 }
 
 
@@ -151,11 +156,11 @@ while (!Raylib.WindowShouldClose())
 {
   //ser till så att powerup bara är aktiv ifall scenen är i game1
   bool Igame1 = scene == "game";
-  
- 
 
 
-//start scene
+
+
+  //start scene
   if (scene == "start")
   {
     walls2.Clear();
@@ -168,15 +173,15 @@ while (!Raylib.WindowShouldClose())
     Raylib.DrawText("Press space to start", 290, 300, 20, Color.Red);
     Raylib.DrawText("Press space after you're done with the first lvl to advance to lvl2", 290, 400, 20, Color.Red);
     Raylib.DrawText("LVL2: Look out for gray rectangles for boosts in lvl2 and you will have a laser activated, you will have 30sec to complete lvl2", 290, 500, 20, Color.Red);
-    
 
-//starta spelet
+
+    //starta spelet
     if (Raylib.IsKeyPressed(KeyboardKey.Space))
     {
       Raylib.ClearBackground(Color.Black);
 
 
-      scene = "game"; 
+      scene = "game";
 
 
       playerRect.X = 21;
@@ -185,17 +190,17 @@ while (!Raylib.WindowShouldClose())
       validspawnpoint = false;
 
     }
-    
+
   }
-//spel 1 scene
+  //spel 1 scene
   else if (scene == "game")
   {
 
-    
+
 
     Raylib.ClearBackground(Color.White);
 
-    
+
 
     foreach (Rectangle wall in walls)
     {
@@ -252,8 +257,9 @@ while (!Raylib.WindowShouldClose())
   }
 
 
-//powerup, ökar hälsa om kollision
-  if (!Igame1 && PowerUp && Raylib.CheckCollisionRecs(playerRect, PowerUpRect)){
+  //powerup, ökar hälsa om kollision
+  if (!Igame1 && PowerUp && Raylib.CheckCollisionRecs(playerRect, PowerUpRect))
+  {
     liv++;
     PowerUp = false;
   }
@@ -262,7 +268,7 @@ while (!Raylib.WindowShouldClose())
   //-------------------------------------------------------------------------
 
 
- //kollision mellan väggar och tar bort liv ifall det blir kollision
+  //kollision mellan väggar och tar bort liv ifall det blir kollision
   (bool playerIsInAWall, bool enemyIsInWall) = CheckInWall(playerRect, enemyRect, walls.Concat(walls2).ToList());
 
   if (playerIsInAWall)
@@ -286,9 +292,10 @@ while (!Raylib.WindowShouldClose())
 
   }
 
-if(enemyIsInWall) {
-  enemyVelocityY = -enemyVelocityY;
-}
+  if (enemyIsInWall)
+  {
+    enemyVelocityY = -enemyVelocityY;
+  }
 
 
 
@@ -304,12 +311,12 @@ if(enemyIsInWall) {
     bool iveggen = true;
 
 
-  
-//spawnar nya fienden och ser till så att den inte spawnar i väggen
+
+    //spawnar nya fienden och ser till så att den inte spawnar i väggen
     while (iveggen)
     {
-      enemyRect.X = random.Next(0, 1800);
-      enemyRect.Y = random.Next(0, 800);
+      enemyRect.X = random.Next(50, 1750);
+      enemyRect.Y = random.Next(50, 750);
       iveggen = walls.Any(wall => Raylib.CheckCollisionRecs(enemyRect, wall));
       iveggen = walls2.Any(wall2 => Raylib.CheckCollisionRecs(enemyRect, wall2));
 
@@ -339,14 +346,14 @@ if(enemyIsInWall) {
 
   if (scene == "game2")
   {
-    walls2.Clear(); 
-    newlevel2(walls2); 
+    walls2.Clear();
+    newlevel2(walls2);
 
     Raylib.ClearBackground(Color.White);
-    
 
 
-//rita ut väggarna i game2
+
+    //rita ut väggarna i game2
     foreach (Rectangle wall2 in walls2)
     {
       Raylib.DrawRectangleRec(wall2, Color.Brown);
@@ -359,48 +366,52 @@ if(enemyIsInWall) {
     Raylib.DrawRectangleRec(playerRect, Color.Red);
     Raylib.DrawRectangleRec(enemyRect, enemyColors[enemyColorss]);
 
-  // om powerup är true 
-  if (PowerUp){
-    Raylib.DrawRectangleRec(PowerUpRect, Color.Gray);
-  }
-//för varje frame går en sek i timern
-  timer += Raylib.GetFrameTime();
-//om timern når 30sek blir tidslut true och scenen går till start
-  if (timer >= 30f && !tidslut){
-  tidslut = true; 
-  scene = "start";
-  }
-
-  if (Raylib.IsKeyPressed(KeyboardKey.X))
-  {
-    //lasern dimensioner
-    lasershot.Add(new Rectangle(playerRect.X + playerRect.Width / 2 - 2, playerRect.Y, 4, 10));
-  }
-
-  for (int i = 0; i < lasershot.Count; i++){
-    Rectangle laser = lasershot[i];
-    laser.Y -= 10;//uppdaterar lasern position
-    lasershot[i] = laser;
-
-//om lasern går ut ur skärmen tars den bort
-    if (laser.Y < 0)
+    // om powerup är true 
+    if (PowerUp)
     {
-      lasershot.RemoveAt(i);
+      Raylib.DrawRectangleRec(PowerUpRect, Color.Gray);
     }
-//annars kollas kollision med lasern och enemyn (ifall den kolliderar spawna ny) och tar bort lasern efter en kollision skett
-    else if (Raylib.CheckCollisionRecs(laser, enemyRect))
+    //för varje frame går en sek i timern
+    timer += Raylib.GetFrameTime();
+    //om timern når 30sek blir tidslut true och scenen går till start
+    if (timer >= 30f && !tidslut)
     {
-      score++;
-      enemyRect.X = random.Next(0, 1800);
-      enemyRect.Y = random.Next(0, 800);
-      lasershot.RemoveAt(i);//tar bort laser
-      i--;
-    }
-    else{
-      Raylib.DrawRectangleRec(laser, Color.Violet);
+      tidslut = true;
+      scene = "start";
     }
 
-  }
+    if (Raylib.IsKeyPressed(KeyboardKey.X))
+    {
+      //lasern dimensioner
+      lasershot.Add(new Rectangle(playerRect.X + playerRect.Width / 2 - 2, playerRect.Y, 4, 10));
+    }
+
+    for (int i = 0; i < lasershot.Count; i++)
+    {
+      Rectangle laser = lasershot[i];
+      laser.Y -= 10;//uppdaterar lasern position
+      lasershot[i] = laser;
+
+      //om lasern går ut ur skärmen tars den bort
+      if (laser.Y < 0)
+      {
+        lasershot.RemoveAt(i);
+      }
+      //annars kollas kollision med lasern och enemyn (ifall den kolliderar spawna ny) och tar bort lasern efter en kollision skett
+      else if (Raylib.CheckCollisionRecs(laser, enemyRect))
+      {
+        score++;
+        enemyRect.X = random.Next(0, 1750);
+        enemyRect.Y = random.Next(0, 750);
+        lasershot.RemoveAt(i);//tar bort laser
+        i--;
+      }
+      else
+      {
+        Raylib.DrawRectangleRec(laser, Color.Violet);
+      }
+
+    }
   }
 
   if (score == 5)
